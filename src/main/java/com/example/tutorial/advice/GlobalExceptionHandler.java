@@ -1,9 +1,10 @@
 package com.example.tutorial.advice;
 
 import com.example.tutorial.exception.ResourceNotFoundException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -20,8 +21,14 @@ public class GlobalExceptionHandler {
         return createResponseEntity(apiError);
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ApiResponse<?>> handleBadCredentialsException(BadCredentialsException ex) {
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiResponse<?>> handleAuthenticationException(AuthenticationException ex) {
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+        return createResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiResponse<?>> handleJwtException(JwtException ex) {
         ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         return createResponseEntity(apiError);
     }

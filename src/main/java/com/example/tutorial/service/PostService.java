@@ -6,10 +6,11 @@ import com.example.tutorial.exception.ResourceNotFoundException;
 import com.example.tutorial.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +31,9 @@ public class PostService {
         return modelMapper.map(savedPost, PostDTO.class);
     }
 
-    public List<PostDTO> getAllPosts() {
-        return postRepository.findAll()
-                .stream()
-                .map(postEntity -> modelMapper.map(postEntity, PostDTO.class))
-                .collect(Collectors.toList());
+    public Page<PostDTO> getAllPosts(Pageable pageable) {
+        return postRepository.findAll(pageable)
+                .map(postEntity -> modelMapper.map(postEntity, PostDTO.class));
     }
 
     public PostDTO updatePost(Long id, PostDTO postDTO) {

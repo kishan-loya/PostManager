@@ -33,7 +33,7 @@ public class JwtService {
                 .compact();
     }
 
-    public Long getUSerIdFromToken(String token) {
+    public Long getUserIdFromToken(String token) {
         Claims claims = Jwts.parser()
                 .verifyWith(getSecretKey())
                 .build()

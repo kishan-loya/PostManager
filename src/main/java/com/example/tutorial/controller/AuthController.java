@@ -1,5 +1,6 @@
 package com.example.tutorial.controller;
 
+import com.example.tutorial.advice.ApiResponse;
 import com.example.tutorial.dto.LoginDTO;
 import com.example.tutorial.dto.SignUpDTO;
 import com.example.tutorial.dto.UserDTO;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        return ResponseEntity.ok(authService.login(loginDTO));
+    public ResponseEntity<ApiResponse<String>> login(@RequestBody LoginDTO loginDTO) {
+        return ResponseEntity.ok(new ApiResponse<>(authService.login(loginDTO)));
     }
 }

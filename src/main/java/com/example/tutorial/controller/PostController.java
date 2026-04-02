@@ -1,11 +1,12 @@
 package com.example.tutorial.controller;
 
-import com.example.tutorial.advice.ApiResponse;
 import com.example.tutorial.client.EmployeeClient;
 import com.example.tutorial.dto.EmployeeDTO;
 import com.example.tutorial.dto.PostDTO;
 import com.example.tutorial.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,8 @@ public class PostController {
     private final EmployeeClient employeeClient;
 
     @GetMapping
-    public ResponseEntity<List<PostDTO>> getAllPosts() {
-        return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
+    public ResponseEntity<Page<PostDTO>> getAllPosts(Pageable pageable) {
+        return new ResponseEntity<>(postService.getAllPosts(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
