@@ -25,6 +25,7 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
         httpSecurity.authorizeHttpRequests(request -> request
                 .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/sse/**", "/mcp/**").permitAll()
                 .requestMatchers("/posts/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
