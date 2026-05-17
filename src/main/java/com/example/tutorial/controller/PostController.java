@@ -42,6 +42,12 @@ public class PostController {
         return new ResponseEntity<>(updatedPost, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+        postService.deletePost(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("/fetch-employees")
     public ResponseEntity<?> fetchEmployees() {
         List<EmployeeDTO> employeeDTOList = employeeClient.getEmployee();

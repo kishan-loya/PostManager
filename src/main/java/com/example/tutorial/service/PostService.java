@@ -44,4 +44,11 @@ public class PostService {
         postRepository.save(postEntity);
         return modelMapper.map(postEntity, PostDTO.class);
     }
+
+    public void deletePost(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Post not found with id: " + id);
+        }
+        postRepository.deleteById(id);
+    }
 }
